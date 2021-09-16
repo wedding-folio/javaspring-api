@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="weddingfolio_users")
+@Table(name="weddingfoliousers")
 public class WeddingFolioUser
 {
   @Id
@@ -26,6 +26,10 @@ public class WeddingFolioUser
   // constructor for JPA
   public WeddingFolioUser()
   {
+  }
+
+  public long getId() {
+    return id;
   }
 
   public String getPassword()
@@ -86,5 +90,13 @@ public class WeddingFolioUser
   public void setState(String state)
   {
     this.state = state;
+  }
+
+  public List<UserPost> getUserPosts() {
+    return userPosts;
+  }
+
+  public void setUserPosts(List<UserPost> userPosts) {
+    this.userPosts = userPosts;
   }
 }

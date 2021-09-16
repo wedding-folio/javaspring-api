@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "userpost")
+@Table(name = "userposts")
 public class UserPost
 {
   @Id
@@ -86,5 +86,13 @@ public class UserPost
   public void setThemeId(Long themeId)
   {
     this.themeId = themeId;
+  }
+
+  public List<Vendor> getVendors() {
+    return vendors;
+  }
+
+  public void setVendors(List<Vendor> vendors) {
+    this.vendors = vendors;
   }
 }
