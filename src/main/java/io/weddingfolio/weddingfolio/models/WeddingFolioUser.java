@@ -1,5 +1,7 @@
 package io.weddingfolio.weddingfolio.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +20,24 @@ public class WeddingFolioUser
   private String city;
   private String state;
 
-  @OneToMany(mappedBy = "userpost",
+  @OneToMany(mappedBy = "user",
     cascade = CascadeType.ALL,
     orphanRemoval = true)
+  @JsonIgnoreProperties(value = "user", allowSetters = true)
   private List<UserPost> userPosts = new ArrayList<>();
 
   // constructor for JPA
   public WeddingFolioUser()
   {
+  }
+
+  public WeddingFolioUser(String password, String firstName, String lastName, String email, String city, String state) {
+    this.password = password;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.city = city;
+    this.state = state;
   }
 
   public long getId() {
@@ -98,5 +110,9 @@ public class WeddingFolioUser
 
   public void setUserPosts(List<UserPost> userPosts) {
     this.userPosts = userPosts;
+  }
+
+  public void setId(long id) {
+    this.id = id;
   }
 }

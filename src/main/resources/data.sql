@@ -12,7 +12,7 @@ FROM weddingthemes;
 
 INSERT INTO weddingfoliousers
 (
-    id
+    id,
     password,
     firstName,
     lastName,

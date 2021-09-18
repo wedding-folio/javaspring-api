@@ -1,5 +1,7 @@
 package io.weddingfolio.weddingfolio.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +17,36 @@ public class UserPost
   private String city;
   private String state;
   private String imageURL;
-  private Long userId;
-  private Long themeId;
+  @ManyToOne
+  @JoinColumn(name = "userid",
+          nullable = false)
+  @JsonIgnoreProperties(value = "userPosts", allowSetters = true)
+  private WeddingFolioUser user;
 
-  @OneToMany(mappedBy = "vendors",
-  cascade = CascadeType.ALL,
-  orphanRemoval = true)
+  @ManyToOne
+  @JoinColumn(name = "themeid",
+          nullable = false)
+  @JsonIgnoreProperties(value = "userPosts", allowSetters = true)
+  private WeddingTheme theme;
+
+  @OneToMany(mappedBy = "userpost",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true)
+  @JsonIgnoreProperties(value = "userpost", allowSetters = true)
   private List<Vendor> vendors = new ArrayList<>();
 
   public UserPost()
   {
 
+  }
+
+  public UserPost(String description, String city, String state, String imageURL, WeddingFolioUser user, WeddingTheme theme) {
+    this.description = description;
+    this.city = city;
+    this.state = state;
+    this.imageURL = imageURL;
+    this.user = user;
+    this.theme = theme;
   }
 
   public String getDescription()
@@ -68,24 +89,20 @@ public class UserPost
     this.imageURL = imageURL;
   }
 
-  public Long getUserId()
-  {
-    return userId;
+  public void setUser(WeddingFolioUser user) {
+    this.user = user;
   }
 
-  public void setUserId(Long userId)
-  {
-    this.userId = userId;
+  public WeddingFolioUser getUser() {
+    return user;
   }
 
-  public Long getThemeId()
-  {
-    return themeId;
+  public void setTheme(WeddingTheme theme) {
+    this.theme = theme;
   }
 
-  public void setThemeId(Long themeId)
-  {
-    this.themeId = themeId;
+  public WeddingTheme getTheme() {
+    return theme;
   }
 
   public List<Vendor> getVendors() {
@@ -94,5 +111,13 @@ public class UserPost
 
   public void setVendors(List<Vendor> vendors) {
     this.vendors = vendors;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
   }
 }

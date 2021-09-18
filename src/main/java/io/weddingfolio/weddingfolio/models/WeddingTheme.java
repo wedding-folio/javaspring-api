@@ -1,5 +1,7 @@
 package io.weddingfolio.weddingfolio.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +14,19 @@ public class WeddingTheme
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
   private String weddingTheme;
-  @OneToMany(mappedBy = "userpost",
-  cascade = CascadeType.ALL,
-  orphanRemoval = true)
+
+  @OneToMany(mappedBy = "theme",
+          cascade = CascadeType.ALL,
+          orphanRemoval = true)
+  @JsonIgnoreProperties(value = "theme", allowSetters = true)
   private List<UserPost> userPosts = new ArrayList<>();
 
   public WeddingTheme()
   {
+  }
+
+  public WeddingTheme(String weddingTheme){
+    this.weddingTheme = weddingTheme;
   }
 
   public long getId()
@@ -39,5 +47,13 @@ public class WeddingTheme
   public void setWeddingTheme(String weddingTheme)
   {
     this.weddingTheme = weddingTheme;
+  }
+
+  public List<UserPost> getUserPosts() {
+    return userPosts;
+  }
+
+  public void setUserPosts(List<UserPost> userPosts) {
+    this.userPosts = userPosts;
   }
 }
